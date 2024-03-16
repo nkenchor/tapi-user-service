@@ -22,6 +22,7 @@ class Config:
     Vault_token = os.getenv("VAULT_TOKEN", "")
     Vault_path = os.getenv("VAULT_PATH", "")
     Vault_key = os.getenv("VAULT_KEY", "")
+    Secret_key = ""
     Jwt_key = os.getenv("JWT_KEY", "default_key")
     Jwt_audience = os.getenv("JWT_AUDIENCE", "tapi")
     Jwt_issuer = os.getenv("JWT_ISSUER", "https://localhost:3003")

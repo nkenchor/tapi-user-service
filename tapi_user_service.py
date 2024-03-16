@@ -1,3 +1,4 @@
+import sys
 from sanic import Sanic, SanicException
 from sanic.response import json
 from sanic.exceptions import SanicException
@@ -13,6 +14,7 @@ from framework.database.setup.database_setup import Database
 from framework.redis.setup.redis_setup import Redis
 from framework.logger.middleware.logger_middleware import log_middleware, request_middleware
 from framework.vault.setup.vault_setup import Vault
+from framework.vault.utils.helper.vault_helper import VaultHelper
 
 app = Sanic(Config.App_name)
 
@@ -36,11 +38,17 @@ async def before_server_start(app, loop):
         # Initialize Vault connection
         Vault.connect()
         print(message.VaultMessage.CONNECTION_SUCCESS)
+        
+        # Getting secrets
+        Config.Secret_key = VaultHelper.get_secret(Config.Vault_path,Config.Vault_key)
+
 
     except Exception as e:
-        error_message = f"Error occurred during server startup: {str(e)}"
+        error_message = f"Unknown error occurred during server startup: {str(e).splitlines()[0]}"
         print(error_message)
-        return json({"error": error_message}, status=500)
+        print("Exiting the application due to an error during server startup.")
+        print("Applicaiton stopped.")
+        sys.exit(1)  # Exit the application process with a non-zero status code indicating an error
 
 
 @app.listener("after_server_stop")
