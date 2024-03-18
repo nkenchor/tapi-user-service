@@ -6,7 +6,6 @@ dist/
 build/
 
 # Environment configuration files
-.md
 .env
 .env.local
 .env.*.local

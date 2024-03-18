@@ -1,4 +1,4 @@
-from sanic.request import Request
+
 from sanic.response import json
 from sanic.exceptions import SanicException
 

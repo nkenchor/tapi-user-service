@@ -83,25 +83,28 @@ class ErrorResponse:
 def error_message(error_type: ErrorType, message: str) -> ErrorResponse:
     return ErrorResponse(error_type, message)
 
-# Custom error class extending the built-in Error class for application-specific errors
+
+
 class AppError(Exception):
-    def __init__(self, error_type: ErrorType, message: str):
+    def __init__(self, error_type: ErrorType, message: str, errors: list = None):
         super().__init__(message)
         self.status_code = CustomError[error_type]
         self.error_type = error_type
         self.error_reference = str(uuid.uuid4())
         self.time_stamp = datetime.now().isoformat()
-        self.errors = [message]
+        # If a list of errors is provided, use it; otherwise, wrap the message in a list
+        self.errors = errors if errors else [message]
 
     def to_json(self):
+        # Convert error details into a JSON-serializable dictionary
         return {
             'statusCode': self.status_code,
             'errorType': self.error_type.value,
             'errorReference': self.error_reference,
             'timeStamp': self.time_stamp,
-            'message': self.args[0],  # `args[0]` is the first argument to the exception, which is the message
             'errors': self.errors,
         }
+
     def to_response(self) -> HTTPResponse:
         # Convert the AppError to a Sanic HTTPResponse
         return HTTPResponse(
@@ -109,7 +112,6 @@ class AppError(Exception):
             body=json.dumps({
                 'errorReference': self.error_reference,
                 'errorType': self.error_type.value,
-                'message': self.args[0],  # `args[0]` is the first argument to the exception, which is the message
                 'errors': self.errors,
                 'statusCode': self.status_code,
                 'timeStamp': self.time_stamp,
