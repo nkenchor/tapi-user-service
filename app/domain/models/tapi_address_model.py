@@ -33,3 +33,6 @@ class Address:
         validator.validate_non_empty_string(self.county, "county")
         validator.validate_non_empty_string(self.postcode, "post Code")
         validator.validate_non_empty_string(self.country, "country")
+
+    def serialize(self):
+        return {attr: getattr(self, attr) for attr in self.__dict__ if not attr.startswith('_')}

@@ -1,5 +1,6 @@
 import hvac
 from configuration.configuration import Config
+from framework.logger.utils.helper.logger_helper import log_event  # Ensure correct import path
 
 class Vault:
     client = None
@@ -14,11 +15,12 @@ class Vault:
                 # Check if the connection is successful
                 if Vault.client.is_authenticated():
                     Vault.isConnected = True
-                    print("Connected successfully to Vault")
+                    log_event("INFO", "Connected successfully to Vault")
                 else:
+                    log_event("ERROR", "Authentication to Vault failed")
                     raise Exception("Authentication to Vault failed")
             except Exception as err:
-                print("Could not connect to Vault:", err)
+                log_event("ERROR", f"Could not connect to Vault: {err}")
                 raise err
         return Vault.client
 
@@ -27,4 +29,4 @@ class Vault:
         if Vault.client and Vault.isConnected:
             Vault.client = None
             Vault.isConnected = False
-            print("Disconnected from Vault")
+            log_event("INFO", "Disconnected from Vault")

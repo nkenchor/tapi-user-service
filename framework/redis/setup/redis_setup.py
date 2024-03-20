@@ -1,5 +1,6 @@
 import redis
 from configuration.configuration import Config
+from framework.logger.utils.helper.logger_helper import log_event  # Ensure correct import path
 
 class Redis:
     client = None
@@ -13,9 +14,9 @@ class Redis:
                 # Check if the connection is successful
                 Redis.client.ping()
                 Redis.isConnected = True
-                print("Connected successfully to Redis")
+                log_event("INFO", "Connected successfully to Redis")
             except Exception as err:
-                print("Could not connect to Redis:", err)
+                log_event("ERROR", f"Could not connect to Redis: {err}")
                 raise err
         return Redis.client
 
@@ -24,4 +25,4 @@ class Redis:
         if Redis.client and Redis.isConnected:
             Redis.client.close()
             Redis.isConnected = False
-            print("Disconnected from Redis")
+            log_event("INFO", "Disconnected from Redis")

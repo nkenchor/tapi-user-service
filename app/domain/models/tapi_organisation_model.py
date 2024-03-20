@@ -11,3 +11,6 @@ class Organisation:
         validator.validate_uuid_format(self.organisation_reference, "organisation reference")
         validator.validate_non_empty_string(self.organisation_reference, "organisation reference")
         validator.validate_non_empty_string(self.organisation_name, "organisation name")
+
+    def serialize(self):
+        return {attr: getattr(self, attr) for attr in self.__dict__ if not attr.startswith('_')}

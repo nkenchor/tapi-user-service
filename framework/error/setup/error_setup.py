@@ -92,17 +92,24 @@ class AppError(Exception):
         self.error_type = error_type
         self.error_reference = str(uuid.uuid4())
         self.time_stamp = datetime.now().isoformat()
-        # If a list of errors is provided, use it; otherwise, wrap the message in a list
-        self.errors = errors if errors else [message]
+         # Conditional assignment based on error_type
+        if error_type == ErrorType.ValidationError:
+            # If it's a validation error, use the message directly
+            self.errors = [message] if not errors else errors
+        else:
+            # For other types of errors, wrap the message in a dict within a list
+            self.errors = [{"message": message}] if not errors else errors
+
 
     def to_json(self):
         # Convert error details into a JSON-serializable dictionary
         return {
-            'statusCode': self.status_code,
-            'errorType': self.error_type.value,
-            'errorReference': self.error_reference,
-            'timeStamp': self.time_stamp,
+            'error_reference': self.error_reference,
+            'error_type': self.error_type.value,
             'errors': self.errors,
+            'status_code': self.status_code,
+            'timestamp': self.time_stamp,
+         
         }
 
     def to_response(self) -> HTTPResponse:
@@ -110,11 +117,11 @@ class AppError(Exception):
         return HTTPResponse(
             status=self.status_code,
             body=json.dumps({
-                'errorReference': self.error_reference,
-                'errorType': self.error_type.value,
+                'error_reference': self.error_reference,
+                'error_type': self.error_type.value,
                 'errors': self.errors,
-                'statusCode': self.status_code,
-                'timeStamp': self.time_stamp,
+                'status_code': self.status_code,
+                'timestamp': self.time_stamp,
               
             }),
             content_type="application/json"

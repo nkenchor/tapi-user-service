@@ -68,7 +68,8 @@ class TypeBasedValidator:
                         validation_func(data, parent_key)
                     except AppError as e:
                         # Append the primary error message
-                        errors.append(f"{e.errors[0]}")
+                        errors.append({parent_key: e.errors[0]})
+
 
 # Example of how to set up validation functions to use with the validator
 validator = TypeBasedValidator({

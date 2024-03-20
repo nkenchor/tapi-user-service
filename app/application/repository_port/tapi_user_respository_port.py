@@ -7,17 +7,17 @@ import uuid
 
 class IUserRepositoryPort(ABC):
     @abstractmethod
-    def create_user(self, user_data: User) -> uuid.UUID:
+    def create_user(self, user_data: User) -> str:
         """Create a new user and return its reference."""
         pass
     
     @abstractmethod
-    def update_user(self, user_reference: uuid.UUID, user_data: User) -> uuid.UUID:
+    def update_user(self, user_reference: str, user_data: User) -> str:
         """Update an existing user and return its reference."""
         pass
     
     @abstractmethod
-    def get_user_by_reference(self, user_reference: uuid.UUID) -> User:
+    def get_user_by_reference(self, user_reference: str) -> User:
         """Get a user by its reference."""
         pass
     
@@ -49,7 +49,7 @@ class IUserRepositoryPort(ABC):
         pass
 
     @abstractmethod
-    def delete_user(self, user_reference: uuid.UUID) -> bool:
+    def delete_user(self, user_reference: str) -> bool:
         """
         Delete a user permanently.
 
@@ -62,7 +62,7 @@ class IUserRepositoryPort(ABC):
         pass
 
     @abstractmethod
-    def soft_delete_user(self, user_reference: uuid.UUID) -> bool:
+    def soft_delete_user(self, user_reference: str) -> bool:
         """
         Soft delete a user.
 
