@@ -1,15 +1,7 @@
 import json
 import logging
-import socket
-import time
-import traceback
 from typing import Optional
-import uuid
-from datetime import datetime
 from sanic import Request
-from sanic.response import HTTPResponse
-from configuration.configuration import Config
-import framework.logger.setup.logger_setup as logger_config
 from framework.logger.utils.data.logger_data import prepare_log_data
 
 logger = logging.getLogger('appLogger')

@@ -35,3 +35,16 @@ modify code runner settings:
 "code-runner.executorMap": {
     "python": "\"/Users/nkenchor/.pyenv/versions/3.12.2/bin/python\" -u",
 }
+
+
+
+Organisation Service
+Identity Service
+Otp Service
+Notification Service
+Onboaring Servicee
+User Service
+Licensing Service
+Sales Service
+Product Service
+Payment Service

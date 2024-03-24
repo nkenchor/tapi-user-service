@@ -18,7 +18,7 @@ class UserUseCase(IUserUseCasePort):
             mobile_number=user_dto.mobile_number,
             email=user_dto.email,
             address=user_dto.address,
-            companies=user_dto.companies,
+            organisations=user_dto.organisations,
             notification_options={},  # Adjust as needed
             is_verified_email=False,
             is_verified_phone=False,
@@ -34,7 +34,7 @@ class UserUseCase(IUserUseCasePort):
             mobile_number=user_dto.mobile_number,
             email=user_dto.email,
             address=user_dto.address,
-            companies=user_dto.companies,
+            organisations=user_dto.organisations,
             notification_options=user_dto.notification_options,  # Assuming these are part of the update DTO
             # Keep other fields that may not be updated directly
         )
@@ -52,4 +52,4 @@ class UserUseCase(IUserUseCasePort):
     def soft_delete_user(self, user_reference: str) -> bool:
         return self.user_repository.soft_delete_user(user_reference)
 
-    # Implement other methods as required by your application logic
+    

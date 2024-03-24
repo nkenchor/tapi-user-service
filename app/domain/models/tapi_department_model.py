@@ -1,4 +1,4 @@
-import uuid
+
 import app.domain.validation.tapi_user_validation as validator
 
 class Department:

@@ -86,6 +86,13 @@ def error_message(error_type: ErrorType, message: str) -> ErrorResponse:
 
 
 class AppError(Exception):
+    error_reference: str = "A unique reference ID for the error"
+    error_type: str = "The type of error that occurred"
+    errors: list[dict] = "A list of error messages or objects detailing the specific issues"
+    status_code: int = "The HTTP status code associated with the error"
+    timestamp: str = "The timestamp when the error occurred"
+
+    
     def __init__(self, error_type: ErrorType, message: str, errors: list = None):
         super().__init__(message)
         self.status_code = CustomError[error_type]

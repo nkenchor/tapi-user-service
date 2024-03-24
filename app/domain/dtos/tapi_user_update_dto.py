@@ -1,7 +1,5 @@
-from dataclasses import dataclass, field, asdict
-from typing import List, Optional
-from app.domain.models.tapi_address_model import Address
-from app.domain.models.tapi_organisation_model import Organisation
+from dataclasses import dataclass,  asdict
+from typing import Optional
 import app.domain.validation.tapi_user_validation as validator
 
 
@@ -11,9 +9,6 @@ class UserUpdateDTO:
     last_name: Optional[str] = None
     mobile_number: Optional[str] = None
     email: Optional[str] = None
-    address: Optional[Address] = None
-    companies: Optional[List[Organisation]] = field(default_factory=list)
-    is_active: Optional[bool] = None
 
     def __post_init__(self):
         validator.validate_non_empty_string(self.first_name, "First name")

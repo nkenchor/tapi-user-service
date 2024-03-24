@@ -1,7 +1,5 @@
-from typing import List, Optional
+
 import uuid
-from app.domain.models.tapi_address_model import Address
-from app.domain.models.tapi_organisation_model import Organisation
 import app.domain.validation.tapi_user_validation as validator
 
 class UserCreateDTO:
@@ -11,16 +9,12 @@ class UserCreateDTO:
         last_name: str,
         mobile_number: str,
         email: str,
-        address: Optional[Address] = None,
-        companies: Optional[List[Organisation]] = None
     ):
         self.user_reference = str(uuid.uuid4())
         self.first_name = first_name
         self.last_name = last_name
         self.mobile_number = mobile_number
         self.email = email
-        self.address = address
-        self.companies = companies if companies is not None else []
 
         # Perform validation checks
         validator.validate_non_empty_string(self.first_name, "First name")
@@ -36,7 +30,5 @@ class UserCreateDTO:
             "last_name": self.last_name,
             "mobile_number": self.mobile_number,
             "email": self.email,
-            "address": self.address.to_dict() if self.address else None,
-            "companies": [company.to_dict() for company in self.companies]
         }
 
