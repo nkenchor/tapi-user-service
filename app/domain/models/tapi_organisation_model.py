@@ -1,7 +1,7 @@
 
 from app.domain.models.tapi_address_model import Address
 from app.domain.models.tapi_department_model import Department
-import app.domain.validation.tapi_user_validation as validator
+import app.domain.shared.shared_validation as validator
 
 class Organisation:
     def __init__(self, organisation_reference: str, organisation_name: str, department: Department, address: Address):

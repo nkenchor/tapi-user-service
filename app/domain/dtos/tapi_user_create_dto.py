@@ -1,6 +1,6 @@
 
 import uuid
-import app.domain.validation.tapi_user_validation as validator
+import app.domain.shared.shared_validation as validator
 
 class UserCreateDTO:
     def __init__(
@@ -16,7 +16,7 @@ class UserCreateDTO:
         self.mobile_number = mobile_number
         self.email = email
 
-        # Perform validation checks
+        validator.validate_required_fields(self)
         validator.validate_non_empty_string(self.first_name, "First name")
         validator.validate_non_empty_string(self.last_name, "Last name")
         validator.validate_email_format(self.email)

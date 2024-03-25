@@ -1,8 +1,8 @@
 from typing import List, Dict, Optional
 
 
-from .tapi_organisation_model import Organisation
-import app.domain.validation.tapi_user_validation as validator
+from app.domain.models.tapi_organisation_model import Organisation
+import app.domain.shared.shared_validation as validator
 
 class User:
     def __init__(
@@ -18,8 +18,9 @@ class User:
         is_verified_phone: bool,
         is_active: bool,
         date_of_birth: Optional[str] = "",
-        last_login_timestamp: Optional[str] = "",
-        last_updated_timestamp: Optional[str] = "",
+        created_at_timestamp: Optional[str] = "",
+        updated_at_timestamp: Optional[str] = "",
+        created_by_user_reference: Optional[str] = "",
         updated_by_user_reference: Optional[str] = "",
         consent_preferences: Dict = None,
         **kwargs  # Accept any additional keyword arguments
@@ -36,8 +37,9 @@ class User:
         self.is_verified_phone = is_verified_phone
         self.is_active = is_active
         self.date_of_birth = date_of_birth
-        self.last_login_timestamp = last_login_timestamp
-        self.last_updated_timestamp = last_updated_timestamp
+        self.created_at_timestamp = created_at_timestamp
+        self.updated_at_timestamp = updated_at_timestamp
+        self.created_by_user_reference = created_by_user_reference
         self.updated_by_user_reference = updated_by_user_reference
         self.consent_preferences = consent_preferences or {}
 

@@ -1,6 +1,6 @@
 from dataclasses import dataclass,  asdict
 from typing import Optional
-import app.domain.validation.tapi_user_validation as validator
+import app.domain.shared.shared_validation as validator
 
 
 @dataclass

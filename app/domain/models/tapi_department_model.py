@@ -1,5 +1,5 @@
 
-import app.domain.validation.tapi_user_validation as validator
+import app.domain.shared.shared_validation as validator
 
 class Department:
     def __init__(self, department_reference: str, department_name: str):
