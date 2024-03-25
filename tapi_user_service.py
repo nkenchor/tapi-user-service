@@ -13,7 +13,7 @@ from app.infrastructure.web.services.services import initialize_controller, init
 from app.infrastructure.web.docs.openapi_configuration import setup_openapi
 
 # Initialize the Sanic app
-app = Sanic("YourAppName")
+app = Sanic(__name__)
 app.config.CORS_ORIGINS = "*"
 
 # Extend the app with Sanic-Ext
@@ -27,7 +27,6 @@ setup_middleware(app)
 
 # Register exception handlers
 setup_handlers(app)
-
 
 
 @app.listener("before_server_start")

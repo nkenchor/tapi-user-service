@@ -7,6 +7,7 @@ from app.domain.dtos.tapi_user_update_dto import UserUpdateDTO  # Assuming this 
 from app.domain.models.tapi_user_model import User
 from typing import List
 
+
 class UserUseCase(IUserUseCase):
     def __init__(self, user_repository: IUserRepository):
         self.user_repository = user_repository
@@ -19,7 +20,6 @@ class UserUseCase(IUserUseCase):
             mobile_number=user_dto.mobile_number,
             email=user_dto.email,
             organisations={},
-            notification_options={},  # Adjust as needed
             is_verified_email=False,
             is_verified_phone=False,
             is_active=True,
@@ -27,6 +27,7 @@ class UserUseCase(IUserUseCase):
             updated_at_timestamp = datetime.now().isoformat(),
             created_by_user_reference = current_user_reference,
             updated_by_user_reference = current_user_reference,
+            consent_preferences= user_dto.consent_preferences
         )
         return self.user_repository.create_user(user)
 
@@ -38,7 +39,6 @@ class UserUseCase(IUserUseCase):
             mobile_number=user_dto.mobile_number,
             email=user_dto.email,
             organisations={},
-            notification_options={},  # Adjust as needed
             is_verified_email=False,
             is_verified_phone=False,
             is_active=True,
@@ -46,7 +46,7 @@ class UserUseCase(IUserUseCase):
             updated_at_timestamp = datetime.now().isoformat(),
             created_by_user_reference = current_user_reference,
             updated_by_user_reference = current_user_reference,
-  
+            consent_preferences= user_dto.consent_preferences
         )
         return self.user_repository.update_user(user_reference, user)
 

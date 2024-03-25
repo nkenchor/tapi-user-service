@@ -1,8 +1,8 @@
-import json
+
 import uuid
 from datetime import datetime
 from enum import Enum
-from sanic import HTTPResponse
+
 
 # Enumeration of custom error types for consistent error handling across the application
 class ErrorType(Enum):
@@ -119,17 +119,4 @@ class DomainError(Exception):
          
         }
 
-    def to_response(self) -> HTTPResponse:
-        # Convert the AppException to a Sanic HTTPResponse
-        return HTTPResponse(
-            status=self.status_code,
-            body=json.dumps({
-                'error_reference': self.error_reference,
-                'error_type': self.error_type.value,
-                'errors': self.errors,
-                'status_code': self.status_code,
-                'timestamp': self.time_stamp,
-              
-            }),
-            content_type="application/json"
-        )
+   

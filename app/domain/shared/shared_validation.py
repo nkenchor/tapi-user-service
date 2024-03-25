@@ -24,6 +24,8 @@ class UUIDStr(str):
     pass
 
 
+
+
 def validate_non_empty_string(value: str, field_name: str = "Value") -> None:
     if not value or not value.strip():
         display_name = field_name.replace("_", " ")  # Adjust the field name for display
@@ -31,6 +33,31 @@ def validate_non_empty_string(value: str, field_name: str = "Value") -> None:
             ErrorType.ValidationError,
             f"{display_name} cannot be empty or just whitespace.",
         )
+     # Check if the string is exactly one character long, regardless of its type
+    if len(value.strip()) == 1:
+        display_name = field_name.replace("_", " ")
+        raise DomainError(
+            ErrorType.ValidationError,
+            f"{display_name} must not be a single character.",
+        )
+        
+    trimmed_value = value.strip()
+    if len(trimmed_value) == 1:
+        # If the string is only one character, ensure it's not a digit or symbol
+        if not re.match(r"^[a-zA-Z]$", trimmed_value):
+            display_name = field_name.replace("_", " ")
+            raise DomainError(
+                ErrorType.ValidationError,
+                f"{display_name} must not be a single number or symbol if only one character long.",
+            )
+    elif len(trimmed_value) < 1:
+        # Ensure the string is more than one character
+        display_name = field_name.replace("_", " ")
+        raise DomainError(
+            ErrorType.ValidationError,
+            f"{display_name} must be more than one character.",
+        )
+
 
 
 def validate_email_format(value: str, field_name: str = "Email") -> None:
@@ -81,6 +108,34 @@ def validate_required_fields(dto_instance):
     if missing_fields:
         formatted_fields = ", ".join(missing_fields).replace('_', ' ').capitalize()
         raise DomainError(ErrorType.ValidationError, f"Missing required fields: {formatted_fields}")
+    
+def validate_consent_preferences(consent_preferences, consent_template):
+    errors = []  # List to accumulate dictionaries of {field_name: error_message}
+
+    # Check each expected consent in the template
+    for key, is_required in consent_template.items():
+        if key not in consent_preferences:
+            # Missing consent
+            if is_required:
+                errors.append({key: "Missing mandatory consent"})
+        else:
+            value = consent_preferences[key]
+            if is_required and value is not True:
+                # Mandatory consent not true
+                errors.append({key: "Mandatory consent must be accepted"})
+            elif not isinstance(value, bool):
+                # Consent value not boolean
+                errors.append({key: "Must be a boolean value"})
+
+    # Identify unexpected consents not defined in the template
+    for key in consent_preferences:
+        if key not in consent_template:
+            errors.append({key: "Unexpected consent key"})
+
+    if errors:
+        # Raise an exception with a list of error dictionaries
+        raise DomainError(ErrorType.ValidationError, "Consent preferences validation failed", errors)
+
 
 class ValidationException(Exception):
     pass

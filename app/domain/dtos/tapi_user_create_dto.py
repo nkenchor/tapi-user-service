@@ -1,6 +1,7 @@
-
 import uuid
+from app.domain.shared import shared_constants
 import app.domain.shared.shared_validation as validator
+
 
 class UserCreateDTO:
     def __init__(
@@ -9,18 +10,28 @@ class UserCreateDTO:
         last_name: str,
         mobile_number: str,
         email: str,
+        consent_preferences: dict,
     ):
+        # Generate a unique user reference
         self.user_reference = str(uuid.uuid4())
-        self.first_name = first_name
-        self.last_name = last_name
+
+        # Direct validation without preliminary checks
+        validator.validate_non_empty_string(first_name, "First name")
+        validator.validate_non_empty_string(last_name, "Last name")
+        validator.validate_email_format(email)
+        validator.validate_mobile_number_format(mobile_number)
+
+        # Consent preferences validation - ensure all values are boolean and required consents are provided
+        validator.validate_consent_preferences(
+            consent_preferences, shared_constants.CONSENT_PREFERENCES
+        )
+
+        # Assign provided values with transformations where applicable
+        self.first_name = first_name.capitalize()
+        self.last_name = last_name.capitalize()
         self.mobile_number = mobile_number
         self.email = email
-
-        validator.validate_required_fields(self)
-        validator.validate_non_empty_string(self.first_name, "First name")
-        validator.validate_non_empty_string(self.last_name, "Last name")
-        validator.validate_email_format(self.email)
-        validator.validate_mobile_number_format(self.mobile_number)
+        self.consent_preferences = consent_preferences
 
     def to_dict(self):
         # Converts the UserCreateDTO and its nested objects to a dictionary
@@ -30,5 +41,5 @@ class UserCreateDTO:
             "last_name": self.last_name,
             "mobile_number": self.mobile_number,
             "email": self.email,
+            "consent_preferences": self.consent_preferences,
         }
-

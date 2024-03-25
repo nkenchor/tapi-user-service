@@ -21,6 +21,11 @@ class IUserUseCase(ABC):
         pass
 
     @abstractmethod
+    def get_user_by_email(self, email: str) -> User:
+        """Retrieve a user by its email."""
+        pass
+    
+    @abstractmethod
     def get_all_users(self, page: int) -> List[User]:
         """
         Retrieve a paginated list of all users.

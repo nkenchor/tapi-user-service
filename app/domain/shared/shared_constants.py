@@ -9,8 +9,6 @@ CONSENT_PREFERENCES = {
     "location_tracking": False,
     "push_notifications": True,
     "privacy_policy": True,
-    "terms_and_conditions": True,
-    
-    
+    "terms_and_conditions": True,   
 }
 

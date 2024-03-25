@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional
+from typing import List,  Optional
 
 
 from app.domain.models.tapi_organisation_model import Organisation
@@ -13,16 +13,14 @@ class User:
         mobile_number: str,
         email: str,
         organisations: List[Organisation],
-        notification_options: Dict,
         is_verified_email: bool,
         is_verified_phone: bool,
         is_active: bool,
-        date_of_birth: Optional[str] = "",
         created_at_timestamp: Optional[str] = "",
         updated_at_timestamp: Optional[str] = "",
         created_by_user_reference: Optional[str] = "",
         updated_by_user_reference: Optional[str] = "",
-        consent_preferences: Dict = None,
+        consent_preferences: dict = None,
         **kwargs  # Accept any additional keyword arguments
     ):
         self.user_reference = user_reference
@@ -32,11 +30,9 @@ class User:
         self.mobile_number = mobile_number
         self.email = email
         self.organisations = organisations
-        self.notification_options = notification_options
         self.is_verified_email = is_verified_email
         self.is_verified_phone = is_verified_phone
         self.is_active = is_active
-        self.date_of_birth = date_of_birth
         self.created_at_timestamp = created_at_timestamp
         self.updated_at_timestamp = updated_at_timestamp
         self.created_by_user_reference = created_by_user_reference

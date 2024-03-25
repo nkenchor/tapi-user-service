@@ -45,7 +45,7 @@ class UserController:
             # Assuming the request JSON directly maps to UserCreateDTO's structure.
             user_dto = UserCreateDTO(**data)
             user_ref_id = self.user_application_service.create_user(user_dto,current_user_reference)
-            return json({"userReference": user_ref_id}, status=201)
+            return json({"user_reference": user_ref_id}, status=201)
 
         except DomainError as domain_error:
             # Handle domain-specific errors with proper HTTP response
@@ -70,10 +70,13 @@ class UserController:
                 return InfrastructureError(ErrorType.UnAuthorized,"Unauthorised user").to_response()
             
             data = request.json
-            # Assuming you have a UserUpdateDTO and corresponding validation
+               # Use the validator to validate incoming data
+            validator.validate(data)
+            
             user_dto = UserUpdateDTO(**data)
-            self.user_application_service.update_user(user_reference, user_dto,current_user_reference)
-            return json({"message": "User updated successfully"}, status=200)
+            user_ref_id = self.user_application_service.update_user(user_reference, user_dto,current_user_reference)
+            return json({"user_reference": user_ref_id}, status=201)
+        
         except DomainError as domain_error:
             # Handle domain-specific errors with proper HTTP response
             return InfrastructureError.from_domain_error(domain_error).to_response()
