@@ -12,6 +12,7 @@ from app.infrastructure.web.middleware.middleware import setup_middleware
 from app.infrastructure.web.services.services import initialize_controller, initialize_services
 from app.infrastructure.web.docs.openapi_configuration import setup_openapi
 
+
 # Initialize the Sanic app
 app = Sanic(__name__)
 app.config.CORS_ORIGINS = "*"
