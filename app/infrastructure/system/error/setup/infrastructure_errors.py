@@ -5,11 +5,11 @@ import uuid
 from datetime import datetime
 
 class InfrastructureError:
-    def __init__(self, error_type: ErrorType, message: str = "An error occurred.", errors: list = None):
+    def __init__(self, error_type: ErrorType, message: str = "An error occurred.", errors: dict = None):
         # Direct instantiation with specific details
         self.error_reference = str(uuid.uuid4())
         self.error_type = error_type  # This should be an enum value
-        self.errors = errors if errors else [{"message":message}]  # Additional errors or detail messages
+        self.errors = errors if errors else {"message":[message]}  # Additional errors or detail messages
         self.status_code = CustomError[error_type]
         self.timestamp = datetime.now().isoformat()
 

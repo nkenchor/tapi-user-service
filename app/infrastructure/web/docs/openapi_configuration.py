@@ -2,11 +2,13 @@ from textwrap import dedent
 
 from sanic import Sanic
 
+
 def setup_openapi(app: Sanic):
     app.ext.openapi.describe(
         title="Tidal User API",
         version="2.0.1",
-        description=dedent("""
+        description=dedent(
+            """
             # Tidal User API Documentation
 
             Welcome to the Tidal User API, a comprehensive solution for managing user data within our application. This API is designed to offer developers access to user-related operations, including creation, update, retrieval, and deletion of user records.
@@ -43,5 +45,6 @@ def setup_openapi(app: Sanic):
             For further assistance or to report issues, please contact our support team at support@example.com.
 
             Enjoy building with the Tidal User API!
-        """),
+        """
+        ),
     )

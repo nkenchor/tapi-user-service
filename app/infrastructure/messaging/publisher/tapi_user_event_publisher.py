@@ -14,3 +14,9 @@ class RedisEventPublisher(IUserEventPublisher):
 
     def publish_user_created_event(self, event_data: Any):
         PublisherHelper.publish("UserCreatedEvent", event_data)
+
+    def publish_user_updated_event(self, event_data: Any):
+        PublisherHelper.publish("UserUpdatedEvent", event_data)
+    
+    def publish_user_added_to_organisation_event(self, event_data: Any):
+        PublisherHelper.publish("UserAddedToOrganisationEvent", event_data)

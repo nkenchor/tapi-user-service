@@ -8,19 +8,19 @@ from app.infrastructure.secrets.vault.utils.helper.vault_helper import VaultHelp
 from app.infrastructure.system.logger.utils.helper.logger_helper import log_event
 import app.domain.shared.shared_messages as message
 from app.application.application_services.tapi_user_application_service import UserApplicationService
-from app.application.use_cases.use_case_services.tapi_user_service import UserUseCase
+from app.application.use_cases.use_case_interactor.tapi_user_interactor import UserUseCase
 from app.infrastructure.messaging.publisher.tapi_user_event_publisher import RedisEventPublisher
 from app.infrastructure.persistence.repository.tapi_user_repository import UserRepository
 from app.infrastructure.web.controller.tapi_user_controller import UserController
 
 async def initialize_database():
-    database = Database.connect()
+    database =  Database.connect()
     print(message.DatabaseMessage.CONNECTION_SUCCESS)
     log_event("INFO", message.DatabaseMessage.CONNECTION_SUCCESS)
     return database
 
 async def initialize_redis():
-    redis = Redis.connect()
+    redis =  Redis.connect()
     print(message.RedisMessage.CONNECTION_SUCCESS)
     log_event("INFO", message.RedisMessage.CONNECTION_SUCCESS)
     return redis
@@ -42,8 +42,8 @@ async def initialize_services():
         # Assuming the below constructors don't await, but the objects are used in async contexts later
         redis_event_publisher = RedisEventPublisher(redis)
         user_repository = UserRepository(database)
-        user_use_case = UserUseCase(user_repository)
-        user_application_service = UserApplicationService(user_use_case, redis_event_publisher)
+        user_use_case = UserUseCase(user_repository, redis_event_publisher)
+        user_application_service = UserApplicationService(user_use_case)
 
         print(f"{Config.App_name} services are set up.")
         log_event("INFO", f"{Config.App_name} services are set up.")

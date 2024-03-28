@@ -12,7 +12,7 @@ class Vault:
         if not Vault.client or not Vault.isConnected:
             try:
                 # Create a connection to Vault using the provided configuration
-                Vault.client = hvac.Client(url=Config.Vault_url, token=Config.Vault_token)
+                Vault.client =  hvac.Client(url=Config.Vault_url, token=Config.Vault_token)
                 # Check if the connection is successful
                 if Vault.client.is_authenticated():
                     Vault.isConnected = True

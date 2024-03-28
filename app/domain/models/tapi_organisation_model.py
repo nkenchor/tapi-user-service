@@ -16,7 +16,7 @@ class Organisation:
         validator.validate_non_empty_string(self.department, "department")
         validator.validate_non_empty_string(self.address,"address")
 
-    def serialize(self):
+    def to_json(self):
         return {attr: getattr(self, attr) for attr in self.__dict__ if not attr.startswith('_')}
     
     

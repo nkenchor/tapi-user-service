@@ -1,17 +1,28 @@
 from abc import ABC, abstractmethod
 from typing import List
-from app.domain.dtos.tapi_user_create_dto import UserCreateDTO
-from app.domain.dtos.tapi_user_update_dto import UserUpdateDTO  # Assuming this exists
+from app.domain.dtos.tapi_user_create import UserCreateDTO
+from app.domain.dtos.tapi_user_organisation import UserAddOrganisationDTO, UserRemoveOrganisationDTO
+from app.domain.dtos.tapi_user_update import UserUpdateDTO  # Assuming this exists
 from app.domain.models.tapi_user_model import User
+
 
 class IUserUseCase(ABC):
     @abstractmethod
-    def create_user(self, user_dto: UserCreateDTO,current_user_reference:str) -> str:
+    def create_user(self, user_dto: UserCreateDTO) -> str:
         """Create a new user."""
         pass
 
     @abstractmethod
-    def update_user(self, user_reference: str, user_dto: UserUpdateDTO,current_user_reference:str) -> str:
+    def update_user(
+        self, user_reference: str, user_dto: UserUpdateDTO, current_user_reference: str
+    ) -> str:
+        """Update an existing user."""
+        pass
+    
+    @abstractmethod
+    def add_user_to_organisation(
+        self, user_reference: str, user_dto: UserAddOrganisationDTO, current_user_reference: str
+    ) -> str:
         """Update an existing user."""
         pass
 
@@ -24,7 +35,7 @@ class IUserUseCase(ABC):
     def get_user_by_email(self, email: str) -> User:
         """Retrieve a user by its email."""
         pass
-    
+
     @abstractmethod
     def get_all_users(self, page: int) -> List[User]:
         """
@@ -64,4 +75,9 @@ class IUserUseCase(ABC):
         """
         pass
 
-
+    @abstractmethod
+    def remove_user_from_organisation(
+        self, user_reference: str, organisation_remove_dto: UserRemoveOrganisationDTO, current_user_reference: str
+    ) -> str:
+        """Update an existing user."""
+        pass

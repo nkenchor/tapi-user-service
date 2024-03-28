@@ -3,29 +3,27 @@ from typing import List
 from app.domain.models.tapi_user_model import User
 
 
-
-
 class IUserRepository(ABC):
     @abstractmethod
     def create_user(self, user_data: User) -> str:
         """Create a new user and return its reference."""
         pass
-    
+
     @abstractmethod
     def update_user(self, user_reference: str, user_data: User) -> str:
         """Update an existing user and return its reference."""
         pass
-    
+
     @abstractmethod
     def get_user_by_reference(self, user_reference: str) -> User:
         """Get a user by reference."""
         pass
-    
+
     @abstractmethod
     def get_user_by_email(self, email: str) -> User:
         """Get a user by  email."""
         pass
-    
+
     @abstractmethod
     def get_all_users(self, page: int) -> List[User]:
         """
@@ -78,4 +76,3 @@ class IUserRepository(ABC):
             bool: True if the user was successfully soft deleted, False otherwise.
         """
         pass
- 

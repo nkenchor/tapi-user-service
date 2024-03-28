@@ -78,7 +78,7 @@ class ErrorResponse:
         self.error_type = error_type
         self.time_stamp = datetime.now().isoformat()
         self.code = CustomError[error_type]
-        self.errors = [message]
+        self.errors = {message}
 
 def error_message(error_type: ErrorType, message: str) -> ErrorResponse:
     return ErrorResponse(error_type, message)
@@ -88,12 +88,12 @@ def error_message(error_type: ErrorType, message: str) -> ErrorResponse:
 class DomainError(Exception):
     error_reference: str = "A unique reference ID for the error"
     error_type: str = "The type of error that occurred"
-    errors: list[dict] = "A list of error messages or objects detailing the specific issues"
+    errors: dict = "A dict of error messages or objects detailing the specific issues"
     status_code: int = "The HTTP status code associated with the error"
     timestamp: str = "The timestamp when the error occurred"
 
     
-    def __init__(self, error_type: ErrorType, message: str, errors: list = None):
+    def __init__(self, error_type: ErrorType, message: str=None, errors: dict = None):
         super().__init__(message)
         self.status_code = CustomError[error_type]
         self.error_type = error_type
@@ -102,10 +102,10 @@ class DomainError(Exception):
          # Conditional assignment based on error_type
         if error_type == ErrorType.ValidationError:
             # If it's a validation error, use the message directly
-            self.errors = [message] if not errors else errors
+            self.errors = {message} if not errors else errors
         else:
             # For other types of errors, wrap the message in a dict within a list
-            self.errors = [{"message": message}] if not errors else errors
+            self.errors = {"message": [message]} if not errors else errors
 
 
     def to_json(self):
