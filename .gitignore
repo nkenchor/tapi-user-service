@@ -6,10 +6,7 @@ dist/
 build/
 
 # Environment configuration files
-.env
-.env.local
-.env.*.local
-!*.example
+
 
 # IDEs and editors
 .vscode/
