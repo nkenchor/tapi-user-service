@@ -63,7 +63,7 @@ Ensure that MongoDB, Vault, and Redis are installed and running on your system. 
 
 ### Configuration
 
-Configure the service by setting the necessary environment variables or modifying the `config.py` file as needed. This includes database URIs, Vault connection settings, and Redis server details.
+Configure the service by setting the necessary environment variables or modifying the `configuration.py` file as needed. This includes database URIs, Vault connection settings, and Redis server details. Do not forget to create a .env file in the root folder of of the application.
 
 ## Usage
 
