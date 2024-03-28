@@ -63,7 +63,29 @@ Ensure that MongoDB, Vault, and Redis are installed and running on your system. 
 
 ### Configuration
 
-Configure the service by setting the necessary environment variables or modifying the `configuration.py` file as needed. This includes database URIs, Vault connection settings, and Redis server details. Do not forget to create a .env file in the root folder of of the application.
+Configure the service by setting the necessary environment variables or modifying the `configuration.py` file as needed. This includes database URIs, Vault connection settings, and Redis server details. Do not forget to create a .env file in the root folder of of the application. Which should look liek the below:
+
+ADDRESS=localhost
+PORT=30301
+MODE=dev
+NAME=tapi-user-service
+LOG_FILE=tapi-user-service.log
+LOG_DIR=logs
+LAUNCH_URL=swagger
+APP_NAME=tapi-user-service
+DB_TYPE=mongodb
+DB_URL=mongodb://localhost:27017/?socketTimeoutMS=10000&connectTimeoutMS=10000&serverSelectionTimeoutMS=10000
+DB=tapi
+REDIS_HOST=localhost
+REDIS_PORT=6379
+VAULT_URL=http://127.0.0.1:8200
+VAULT_TOKEN=
+VAULT_PATH=
+VAULT_KEY=
+JWT_KEY=
+JWT_AUDIENCE=tapi
+JWT_ISSUER=
+JWT_EXPIRY=24h
 
 ## Usage
 
