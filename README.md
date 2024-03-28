@@ -92,7 +92,7 @@ JWT_EXPIRY=24h
 To run the TAPI User Service, execute the following command in the root directory of the project:
 
 ```bash
-python -m sanic app.app --host=0.0.0.0 --port=8000
+sanic tapi_user_service
 ```
 
 This will start the Sanic server, making the service available on `localhost:8000`.
